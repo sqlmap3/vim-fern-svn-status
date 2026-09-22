@@ -30,7 +30,7 @@ function! s:get_wcroot(helper) abort
   if found ==# ''
     let p = s:Promise.reject('Not a Subversion working copy')
   else
-    let p = s:Promise.resolve(fnamemodify(found, ':h'))
+    let p = s:Promise.resolve(resolve(fnamemodify(found, ':h')))
   endif
   call setbufvar(bufnr, s:GET_WCROOT_CACHE_VARNAME, p)
   return p
