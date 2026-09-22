@@ -1,0 +1,104 @@
+*fern-svn-status.txt*	Add SVN status badges to fern
+
+==============================================================================
+CONTENTS							*fern-svn-status-contents*
+
+  INTRODUCTION			|fern-svn-status-introduction|
+  USAGE				|fern-svn-status-usage|
+  VARIABLES			|fern-svn-status-variables|
+  HIGHLIGHTS			|fern-svn-status-highlights|
+  COMMANDS			|fern-svn-status-commands|
+  REQUIREMENTS			|fern-svn-status-requirements|
+
+==============================================================================
+INTRODUCTION						*fern-svn-status-introduction*
+
+fern-svn-status.vim adds Subversion status badges to |fern|, mirroring the
+behaviour of fern-git-status.  Every node that differs from the repository is
+suffixed with a badge such as ` [M]` (modified), ` [A]` (added), ` [D]`
+(deleted), ` [?]` (unversioned) or ` [I]` (ignored).  A parent directory that
+contains a change is marked with ` [-]`.
+
+The status is fetched asynchronously with `svn status --xml` and written into
+the node badge, so it works with any renderer that appends `node.badge`.
+
+==============================================================================
+USAGE							*fern-svn-status-usage*
+
+Open fern inside a Subversion working copy.  Badges appear automatically.
+
+The plugin is registered on |VimEnter| unless startup is disabled (see
+|g:fern_svn_status_disable_startup|).
+
+==============================================================================
+VARIABLES						*fern-svn-status-variables*
+
+g:fern_svn_status_disable_startup			*g:fern_svn_status_disable_startup*
+	Set to 1 to avoid registering the plugin on startup.  Call
+	`fern_svn_status#init()` manually afterwards.
+
+g:fern_svn_status#disable_ignored			*g:fern_svn_status#disable_ignored*
+	Default: 0.  Set to 1 to hide ` [I]` badges.
+
+g:fern_svn_status#disable_unversioned		*g:fern_svn_status#disable_unversioned*
+	Default: 0.  Set to 1 to hide ` [?]` badges.
+
+g:fern_svn_status#disable_directories		*g:fern_svn_status#disable_directories*
+	Default: 0.  Set to 1 to disable the ` [-]` summary badge on parent
+	directories.
+
+g:fern_svn_status#stained_character			*g:fern_svn_status#stained_character*
+	Default: `-`.  Character shown on a directory that contains a change.
+
+g:fern_svn_status#stained_items			*g:fern_svn_status#stained_items*
+	Default: `['modified', 'added', 'deleted', 'replaced', 'conflicted',
+	'missing', 'incomplete', 'obstructed', 'unversioned']`.  Item statuses
+	that cause an ancestor directory to be marked as stained.
+
+g:fern_svn_status#status_chars				*g:fern_svn_status#status_chars*
+	Default: >
+	  {
+	    'modified': 'M', 'added': 'A', 'deleted': 'D', 'replaced': 'R',
+	    'conflicted': 'C', 'missing': '!', 'incomplete': '!',
+	    'obstructed': '~', 'unversioned': '?', 'ignored': 'I',
+	    'external': 'X',
+	  }
+<
+	Maps a Subversion item status to a single display character.  Values may
+	be multi-byte (e.g. a Nerd Font glyph).
+
+==============================================================================
+HIGHLIGHTS						*fern-svn-status-highlights*
+
+Highlight			Default link
+FernSvnStatusBracket		Comment
+FernSvnStatusModified		Special
+FernSvnStatusAdded		Special
+FernSvnStatusDeleted		WarningMsg
+FernSvnStatusReplaced		Special
+FernSvnStatusConflicted		ErrorMsg
+FernSvnStatusMissing		WarningMsg
+FernSvnStatusUnversioned	Comment
+FernSvnStatusIgnored		Comment
+FernSvnStatusExternal		Comment
+FernSvnStatusStained		WarningMsg
+
+Note: the per-character highlight groups match the default ASCII characters.
+If you customise |g:fern_svn_status#status_chars| with glyphs, define your own
+highlight/syntax rules for them.
+
+==============================================================================
+COMMANDS						*fern-svn-status-commands*
+
+:FernSvnStatusRefresh					*:FernSvnStatusRefresh*
+	Re-run the status query for every visible fern buffer, e.g. after
+	committing from another terminal.
+
+==============================================================================
+REQUIREMENTS						*fern-svn-status-requirements*
+
+- Vim 8.2+ or Neovim 0.4+
+- |fern| (lambdalisue/vim-fern)
+- Subversion 1.7+ (the `svn` executable must be in `$PATH`)
+
+vim:tw=78:ts=8:noet:ft=help:norl:
