@@ -18,7 +18,7 @@ subproject/                 [-]
     build.log               [I]   (ignored)
 ```
 
-The status is fetched asynchronously with `svn status --xml` (local only, no
+The status is fetched asynchronously with `svn status --xml --no-ignore` (local only, no
 network access) and written into `node.badge`, so it works with any renderer
 that appends the badge — including
 [fern-renderer-nerdfont](https://github.com/lambdalisue/fern-renderer-nerdfont.vim).

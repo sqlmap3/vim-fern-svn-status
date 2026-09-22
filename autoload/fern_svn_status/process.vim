@@ -1,6 +1,6 @@
 let s:Process = vital#fern#import('Async.Promise.Process')
 
-" Execute `svn status --xml` inside the working copy root and parse the
+" Execute `svn status --xml --no-ignore` inside the working copy root and parse the
 " result.  Resolves to a list of [absolute_path, item, props] entries where
 " the path uses Unix slashes so it can be compared directly with node._path.
 "
@@ -9,7 +9,7 @@ let s:Process = vital#fern#import('Async.Promise.Process')
 function! fern_svn_status#process#status(wcroot, token) abort
   let l:Profile = fern#profile#start('fern_svn_status#process#status')
   return s:Process.start(
-        \ ['svn', 'status', '--xml', '--non-interactive'],
+        \ ['svn', 'status', '--xml', '--no-ignore', '--non-interactive'],
         \ {
         \   'cwd': a:wcroot,
         \   'token': a:token,

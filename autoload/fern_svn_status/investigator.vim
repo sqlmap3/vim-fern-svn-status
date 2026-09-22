@@ -36,7 +36,7 @@ function! s:get_wcroot(helper) abort
   return p
 endfunction
 
-" Run `svn status --xml`, canceling any previous in-flight request first so
+" Run `svn status --xml --no-ignore`, canceling any previous in-flight request first so
 " that a stale (slower) query can never overwrite a newer one.
 function! s:get_status(helper, wcroot) abort
   let bufnr = a:helper.bufnr

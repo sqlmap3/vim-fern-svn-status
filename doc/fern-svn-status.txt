@@ -19,7 +19,7 @@ suffixed with a badge such as ` [M]` (modified), ` [A]` (added), ` [D]`
 (deleted), ` [?]` (unversioned) or ` [I]` (ignored).  A parent directory that
 contains a change is marked with ` [-]`.
 
-The status is fetched asynchronously with `svn status --xml` and written into
+The status is fetched asynchronously with `svn status --xml --no-ignore` and written into
 the node badge, so it works with any renderer that appends `node.badge`.
 
 ==============================================================================
